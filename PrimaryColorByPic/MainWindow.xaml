@@ -31,12 +31,6 @@
                         Height="128"
                         Background="{Binding NearestColor}"
                         CornerRadius="32">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="9"
-                                Direction="-90"
-                                ShadowDepth="1" />
-                        </Border.Effect>
                     </Border>
                 </Grid>
                 <Grid Margin="0,0,0,16" VerticalAlignment="Bottom">
@@ -53,12 +47,6 @@
                         Height="64"
                         Background="{Binding NearestColor}"
                         CornerRadius="100">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="9"
-                                Direction="-90"
-                                ShadowDepth="1" />
-                        </Border.Effect>
                     </Border>
                     <Border
                         Grid.Column="1"
@@ -66,12 +54,6 @@
                         Height="64"
                         Background="{Binding NearestColor}"
                         CornerRadius="100">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="9"
-                                Direction="-90"
-                                ShadowDepth="1" />
-                        </Border.Effect>
                     </Border>
                     <Border
                         Grid.Column="2"
@@ -79,12 +61,6 @@
                         Height="64"
                         Background="{Binding NearestColor}"
                         CornerRadius="100">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="9"
-                                Direction="-90"
-                                ShadowDepth="1" />
-                        </Border.Effect>
                     </Border>
                     <Border
                         Grid.Column="3"
@@ -92,12 +68,6 @@
                         Height="64"
                         Background="{Binding NearestColor}"
                         CornerRadius="100">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="9"
-                                Direction="-90"
-                                ShadowDepth="1" />
-                        </Border.Effect>
                     </Border>
                     <Border
                         Grid.Column="4"
@@ -105,12 +75,6 @@
                         Height="64"
                         Background="{Binding NearestColor}"
                         CornerRadius="100">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="9"
-                                Direction="-90"
-                                ShadowDepth="1" />
-                        </Border.Effect>
                     </Border>
                 </Grid>
             </Grid>

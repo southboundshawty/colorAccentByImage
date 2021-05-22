@@ -1,20 +1,24 @@
-﻿using Microsoft.Win32;
-
-using PrimaryColorByPic.Core;
-using PrimaryColorByPic.Helpers;
-
-using System;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
+using PrimaryColorByPic.Core;
+using PrimaryColorByPic.Helpers;
 
 namespace PrimaryColorByPic.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
-        private System.Windows.Media.Brush _mostUsedColor;
+        private ICommand _loadImageCommand;
+        private Brush _mostUsedColor;
 
-        public System.Windows.Media.Brush MostUsedColor
+        private Brush _nearestColor;
+
+        private BitmapImage _testImage;
+
+        public Brush MostUsedColor
         {
             get => _mostUsedColor;
             set
@@ -24,9 +28,7 @@ namespace PrimaryColorByPic.ViewModels
             }
         }
 
-        private System.Windows.Media.Brush _nearestColor;
-
-        public System.Windows.Media.Brush NearestColor
+        public Brush NearestColor
         {
             get => _nearestColor;
             set
@@ -35,8 +37,6 @@ namespace PrimaryColorByPic.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private BitmapImage _testImage;
 
         public BitmapImage TestImage
         {
@@ -48,13 +48,12 @@ namespace PrimaryColorByPic.ViewModels
             }
         }
 
-        private ICommand _loadImageCommand;
         public ICommand LoadImageCommand => _loadImageCommand ??= new RelayCommand(LoadImage);
 
-        private void LoadImage(object commandParameter)
+        private async void LoadImage(object commandParameter)
         {
             OpenFileDialog openFileDialog = new()
-            { CheckPathExists = true, Filter = "Файлы изображений|*.jpg;*.png;" };
+                {CheckPathExists = true, Filter = "Файлы изображений|*.jpg;*.png;"};
 
             openFileDialog.ShowDialog();
 
@@ -65,11 +64,19 @@ namespace PrimaryColorByPic.ViewModels
 
             TestImage = new BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
 
-            Color mostUsedColor = Palette.GetMostUsedColor(TestImage.ToBitmap());
-            Color nearestColor = Palette.GetNearestColor(mostUsedColor);
+            Color mostUsedColor = default; 
+            Color nearestColor = default;
 
-            MostUsedColor = new SolidColorBrush(System.Windows.Media.Color.FromArgb(mostUsedColor.A, mostUsedColor.R, mostUsedColor.G, mostUsedColor.B));
-            NearestColor = new SolidColorBrush(System.Windows.Media.Color.FromArgb(nearestColor.A, nearestColor.R, nearestColor.G, nearestColor.B));
+            await Task.Factory.StartNew(() =>
+            {
+                mostUsedColor = Palette.GetMostUsedColor(TestImage.ToBitmap());
+                nearestColor = Palette.GetNearestColor(mostUsedColor);
+            });
+
+            MostUsedColor =
+                new SolidColorBrush(mostUsedColor);
+            NearestColor =
+                new SolidColorBrush(nearestColor);
         }
     }
 }
